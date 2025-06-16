@@ -1,0 +1,451 @@
+{
+	"info": {
+		"_postman_id": "6dcc20e2-123c-4779-9ac1-1c4e5fe28a7f",
+		"name": "Teste Maquinas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get all tipomaquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1a090cc8-213f-4906-880a-8753c9d501bc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is empty\", function() {",
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"pm.globals.set(\"idTipoMaquina\", jsonData[0].id)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina"
+					]
+				},
+				"description": "E guarda a primeira numa variavel global\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all maquinas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7437413-6386-4b9e-a515-84bab8749391",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is empty\", function() {",
+							"var jsonData = JSON.parse(responseBody)",
+							"pm.expect(jsonData.lenght).to.eql(undefined)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/maquina",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina"
+					]
+				},
+				"description": "Get all maquinas"
+			},
+			"response": []
+		},
+		{
+			"name": "POST primeira maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cfb879c4-63c2-4af9-8b22-339e716675ca",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idMaquina\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"localizacao\":\"ISEP\",\r\n  \"tipoMaquina\": \"{{idTipoMaquina}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/maquina/new",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina",
+						"new"
+					]
+				},
+				"description": "Post de maquina com tipo de maquina null"
+			},
+			"response": []
+		},
+		{
+			"name": "Get posted maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02b93561-83b8-430c-aa5e-7013a282f22d",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/maquina/{{idMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina",
+						"{{idMaquina}}"
+					]
+				},
+				"description": "Get da maquina criada, guardada na variavel global idMaquina"
+			},
+			"response": []
+		},
+		{
+			"name": "get tipo de maquina de maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6eec45ba-8f57-4148-b359-85fc41ae92b1",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/maquina?tipomaquina={{idTipoMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina"
+					],
+					"query": [
+						{
+							"key": "tipomaquina",
+							"value": "{{idTipoMaquina}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change tipoMaquina in Maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09ce6441-0159-4926-8394-8be60d74bd3d",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idMaquina\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/maquina/id={{idMaquina}}&tipomaquina={{idTipoMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina",
+						"id={{idMaquina}}&tipomaquina={{idTipoMaquina}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get changed maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c7797566-2096-43e1-bcfe-04316d21b29e",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/maquina/{{idMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina",
+						"{{idMaquina}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ad60f702-3318-4288-ac62-d7113134b0f3",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is empty\", function() {",
+							"var jsonData = JSON.parse(responseBody)",
+							"pm.expect(jsonData.lenght).to.eql(undefined)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/maquina/{{idMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina",
+						"{{idMaquina}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ef42200-6dbe-48cc-b8c7-147b0108fa70",
+						"exec": [
+							"pm.test(\"Operação not found. Sucess\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([404,400]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/maquina/{{idMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina",
+						"{{idMaquina}}"
+					]
+				},
+				"description": "Confirma que operação já não existe"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b67d8c56-bfc0-418b-baed-8f4338ed08eb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "545cc510-e79b-46d6-9ff0-1879891a0b9f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "fadec084-2918-4f10-9c17-3ad9a5f9e931",
+			"key": "idOperacao",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,350 @@
+{
+	"info": {
+		"_postman_id": "7546f506-d843-4b5f-b795-e575b19274c9",
+		"name": "Teste Operações",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all operações",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7437413-6386-4b9e-a515-84bab8749391",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/operacao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao"
+					]
+				},
+				"description": "Get all operações"
+			},
+			"response": []
+		},
+		{
+			"name": "POST primeira operação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cfb879c4-63c2-4af9-8b22-339e716675ca",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idOperacao2\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"descricao\":\"Operação de teste 1\",\r\n  \"duracao\":15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/operacao?=",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
+					]
+				},
+				"description": "post de uma operação com valores enviados por parametro\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Get posted operacao",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02b93561-83b8-430c-aa5e-7013a282f22d",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/operacao/{{idOperacao2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao",
+						"{{idOperacao2}}"
+					]
+				},
+				"description": "get da operação criada, guardada na variavel global idOperacao2"
+			},
+			"response": []
+		},
+		{
+			"name": "Change operacao descricao",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"descricao\":\"alterado\",\r\n  \"duracao\":24\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/operacao/id={{idOperacao2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao",
+						"id={{idOperacao2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get changed operacao",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98c06485-5e6f-4cf0-85b3-fa831e3510bb",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/operacao/{{idOperacao2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao",
+						"{{idOperacao2}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete operação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "be343cbb-13c4-4946-ac7c-d88e15924f53",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is empty\", function() {",
+							"var jsonData = JSON.parse(responseBody)",
+							"pm.expect(jsonData.lenght).to.eql(undefined)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/operacao/{{idOperacao2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao",
+						"{{idOperacao2}}"
+					]
+				},
+				"description": "Remove operação criada e alterada"
+			},
+			"response": []
+		},
+		{
+			"name": "Get operação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0ef42200-6dbe-48cc-b8c7-147b0108fa70",
+						"exec": [
+							"pm.test(\"Operação not found. Sucess\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([404]);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/operacao/{{idOperacao2}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao",
+						"{{idOperacao2}}"
+					]
+				},
+				"description": "Confirma que operação já não existe"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b67d8c56-bfc0-418b-baed-8f4338ed08eb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "545cc510-e79b-46d6-9ff0-1879891a0b9f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "9eb51c9b-dd23-41bc-8826-4fac2e402ca8",
+			"key": "idOperacao",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

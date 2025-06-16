@@ -1,0 +1,500 @@
+{
+	"info": {
+		"_postman_id": "1eb32e87-a303-4ec8-aa33-d66ee95c4dc6",
+		"name": "Teste Linha Produção",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all linhas produção",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7437413-6386-4b9e-a515-84bab8749391",
+						"exec": [
+							"pm.test(\"Status code is 200 or 204\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,204]);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/linhaproducao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"linhaproducao"
+					]
+				},
+				"description": "Get all operações"
+			},
+			"response": []
+		},
+		{
+			"name": "Get all maquinas",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7437413-6386-4b9e-a515-84bab8749391",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check JSON Response body is empty\", function() {\r",
+							"var jsonData = JSON.parse(responseBody)\r",
+							"\r",
+							"pm.globals.set(\"listMaquinas\", jsonData[0].id)\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/maquina",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina"
+					]
+				},
+				"description": "Get all operações"
+			},
+			"response": []
+		},
+		{
+			"name": "POST linha producao",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "829a1a49-d112-44c2-973c-9b6c27ce4fee",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idlinha\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n  \"lp\": [\"{{listMaquinas}}\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/linhaproducao/new",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"linhaproducao",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posted linha",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02b93561-83b8-430c-aa5e-7013a282f22d",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/linhaproducao/{{idlinha}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"linhaproducao",
+						"{{idlinha}}"
+					]
+				},
+				"description": "get da operação criada, guardada na variavel global idOperacao2"
+			},
+			"response": []
+		},
+		{
+			"name": "cria operacao",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e1f6b0ce-7259-49e2-b461-da6c4d7bf93e",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idOp5\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"descricao\":\"Operação de teste 5\",\r\n  \"duracao\":15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/operacao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "cria tipo maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c3ba50de-f28b-4647-9ab4-2a00898d570f",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idTipoMaquina2\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"ops\": [\"{{idOp5}}\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina/new",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cria maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d502b637-0b90-4c64-9596-4c24396d07b2",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idMaquina2\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"localizacao\":\"Já aquiiii\",\r\n  \"tipoMaquina\": \"{{idTipoMaquina2}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/maquina/new",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"maquina",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change linha",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "57866ce9-c0ce-4f4f-8c8b-5639ed493aff",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202,404]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idlinha\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"mq\": \"{{idTipoMaquina2}}\",\r\n  \"lp\": \"{{idlinha}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/linhaproducao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"linhaproducao"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get changed linha",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "98c06485-5e6f-4cf0-85b3-fa831e3510bb",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/linhaproducao/{{idlinha}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"linhaproducao",
+						"{{idlinha}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b67d8c56-bfc0-418b-baed-8f4338ed08eb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "545cc510-e79b-46d6-9ff0-1879891a0b9f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d7aae578-ed78-4efa-9f7c-9ff74ff6d009",
+			"key": "idOperacao",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

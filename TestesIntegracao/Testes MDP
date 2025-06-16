@@ -1,0 +1,595 @@
+{
+	"info": {
+		"_postman_id": "0bdf8231-92f6-489b-b8d4-df92e59e68a6",
+		"name": "Primeiros teste de integração",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get random produto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "462fff9f-47a4-44c6-ad7a-c9ada4e44e3a",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idOperacao1\", jsonData[0].id)",
+							"pm.globals.set(\"idplanofabrico1\", jsonData.id)",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/operacao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all planofabrico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d7437413-6386-4b9e-a515-84bab8749391",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is empty\", function() {",
+							" pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants",
+							"     // assert that the response has a valid JSON body",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json; ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/planofabrico",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"planofabrico"
+					]
+				},
+				"description": "Get all operações - Deverá dar 0 operações"
+			},
+			"response": []
+		},
+		{
+			"name": "NovoPlanoFabrico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "09079741-6922-412b-b0f2-f215fe7b7f7a",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"",
+							"pm.globals.set(\"idplanofabrico1\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descricao\":\"DESCRICAO\",\n\t\"operacoes\":[\"{{idOperacao1}}\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/planofabrico",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"planofabrico"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete operacao",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/planofabrico/pf={{idplanofabrico1}}&ope={{idOperacao1}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"planofabrico",
+						"pf={{idplanofabrico1}}&ope={{idOperacao1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get posted plano fabrico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "02b93561-83b8-430c-aa5e-7013a282f22d",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/operacao/{{idOperacao}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao",
+						"{{idOperacao}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionar Operacao",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4ad36ae0-dd31-4d12-af31-d1dc3ccad9c8",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"pm.test(\"plano fabrico e operacao compativel\", function () {",
+							"    pm.expect(pm.globals.get(\"idplanofabrico1\")).to.equal(jsonData.id);",
+							"});",
+							"",
+							"pm.test(\"plano fabrico e operacao compativel\", function () {",
+							"    pm.expect(pm.globals.get(\"idOperacao1\")).to.equal(jsonData.operacoes[0].id);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/planofabrico/id={{idplanofabrico1}}&op={{idOperacao1}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"planofabrico",
+						"id={{idplanofabrico1}}&op={{idOperacao1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Produtos",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "62dd181c-86ac-4894-a7c8-f2af0fe66cbe",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is empty\", function() {",
+							" pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants",
+							"     // assert that the response has a valid JSON body",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json; ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "post produto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "697b3d0d-3464-43ee-85e7-ee71f446ae1c",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"plano fabrico compativel\", function () {",
+							"    pm.expect(pm.globals.get(\"idplanofabrico1\")).to.equal(jsonData.planoFabrico.id);",
+							"});",
+							"",
+							"",
+							"pm.globals.set(\"idproduto\", jsonData.id)",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"descricao\":\"descricao\",\n\t\"idplano\":\"{{idplanofabrico1}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/produtos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get Produto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7d509e4d-adfe-4725-ad3a-f38d6a3377d7",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is not empty\", function() {",
+							" pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants",
+							"     // assert that the response has a valid JSON body",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json; ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/produtos/{{idproduto}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos",
+						"{{idproduto}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get planodefabrico de produto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "194d1251-2871-4a8a-a23a-8551cfb2fe65",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is not empty\", function() {",
+							" pm.response.to.be.ok; // info, success, redirection, clientError,  serverError, are other variants",
+							"     // assert that the response has a valid JSON body",
+							"     pm.response.to.be.withBody;",
+							"     pm.response.to.be.json; ",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/produtos/id={{idproduto}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos",
+						"id={{idproduto}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "mudarPlanoFabrico",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6671f835-241e-4e22-ac04-b18fc8a338c6",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,200]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"plano fabrico e produto compativel\", function () {",
+							"    pm.expect(pm.globals.get(\"idplanofabrico1\")).to.equal(jsonData.planoFabrico.id);",
+							"});",
+							"",
+							"pm.test(\"plano fabrico e produto compativel\", function () {",
+							"    pm.expect(pm.globals.get(\"idproduto\")).to.equal(jsonData.id);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/produtos/id={{idproduto}}&plano={{idplanofabrico1}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos",
+						"id={{idproduto}}&plano={{idplanofabrico1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete produto",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "da4b3e98-d147-48c2-86f5-40706f19656d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.test(\"plano fabrico e produto compativel\", function () {",
+							"    pm.expect(pm.globals.get(\"idproduto\")).to.equal(jsonData.id);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/produtos/{{idproduto}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"produtos",
+						"{{idproduto}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b67d8c56-bfc0-418b-baed-8f4338ed08eb",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "545cc510-e79b-46d6-9ff0-1879891a0b9f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "b66e0227-a00e-4996-a008-0f724f206115",
+			"key": "operacoes\n",
+			"value": "3126a1f4-e013-4870-3f15-08d758b0034c",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}

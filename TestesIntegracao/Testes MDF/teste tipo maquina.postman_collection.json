@@ -1,0 +1,476 @@
+{
+	"info": {
+		"_postman_id": "1dec69e8-8a1f-4de8-b101-e7869e07f15d",
+		"name": "teste tipo maquina",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get tipos maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b51e82e-a9b7-4445-bffa-b2aec1b0fa77",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get operações",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9704875a-90d8-4135-a7f8-59d1becf275e",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check JSON Response body is empty\", function() {",
+							"var jsonData = JSON.parse(responseBody)",
+							"",
+							"pm.globals.set(\"idOp3\", jsonData[0].id)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/operacao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post tipo maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f5f4cb41-09c8-4b1d-a51b-7ade0ce31324",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idTipoMaquina\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n  \"ops\": [\"{{idOp3}}\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina/new",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina",
+						"new"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get  tipo maquina criada",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fb1fda5f-94ea-46b0-be63-28b814e1dee2",
+						"exec": [
+							"pm.test(\"Found posted operacao\", function () {",
+							"    var jsonData = JSON.parse(responseBody)",
+							"    var str = JSON.stringify(jsonData)",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina/{{idTipoMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina",
+						"{{idTipoMaquina}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get operações tipo maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "76314923-f231-498b-be38-34ad84c6092b",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina/tipoMaquina={{idTipoMaquina}}&operacoes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina",
+						"tipoMaquina={{idTipoMaquina}}&operacoes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create operacao",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6f7cc627-cf21-4d17-86e6-b137adc5bc5a",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idOp4\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"descricao\":\"Nova Operação\",\r\n  \"duracao\":15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/operacao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add nova operação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "813dbfbb-f933-467c-b524-948ba52d4958",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"op\": \"{{idOp4}}\",\r\n  \"tp\": \"{{idTipoMaquina}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get operações tipo maquina 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5dbf34d2-4a46-4dfe-8a8f-93b154c74cbf",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina/tipoMaquina={{idTipoMaquina}}&operacoes",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina",
+						"tipoMaquina={{idTipoMaquina}}&operacoes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "nova operação",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ed59b8f4-edba-416e-9ddf-1dcb9ce5f329",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idOp3\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"descricao\":\"Nova Operação2222\",\r\n  \"duracao\":15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/operacao",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"operacao"
+					]
+				},
+				"description": "substitui idOp3\n"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Operacao de tipo de maquina",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1af97975-48c8-4ed9-9ee2-d225f5a2206f",
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200,201,202]);",
+							"});",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"",
+							"pm.globals.set(\"idTipoMaquina\", jsonData.id)",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\"{{idOp3}}\"]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/tipomaquina/{{idTipoMaquina}}",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"tipomaquina",
+						"{{idTipoMaquina}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
