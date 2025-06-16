@@ -1,0 +1,24 @@
+@mixin border($border) {
+	border-radius: 50%;
+	padding: $border;
+}
+
+@mixin profile-pic($side, $border) {
+	img {
+		height: $side;
+		width: $side;
+		border-radius: 50%;
+	}
+
+	.Customer {
+		@include border($border);
+		$gradient: linear-gradient(to bottom left, red, orange);
+		background: $gradient;
+	}
+
+	.Admin {
+		@include border($border);
+		$gradient: linear-gradient(to bottom right, #ff3cac, #562b7c, #2b86c5) !global;
+		background: $gradient;
+	}
+}

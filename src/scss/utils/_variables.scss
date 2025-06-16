@@ -1,0 +1,28 @@
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+
+//Variables
+$fc-bg: #c9c9c9;
+$modal-bg-color: #353535;
+$label: color-yiq($body-bg);
+
+$body-bg: #2d2e2e;
+$surrounding-bgc: #252626;
+
+$theme-colors: (
+	'primary': #0074d9,
+	'danger': #ff4338,
+	'warning': #fcba03
+);
+
+//Variables
+$fc-bg: #c9c9c9;
+$modal-bg-color: #353535;
+$label: color-yiq($body-bg);
+
+$surrounding-bgc: #252626;
+$sidebar-text: #bfbfbf;
+$footer-height: 100px;
+$dashboard-max-height: calc(100vh - (200px));
+
+$gradient: $surrounding-bgc !global;
+

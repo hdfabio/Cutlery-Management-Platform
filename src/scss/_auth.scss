@@ -1,0 +1,54 @@
+@import "./surrounding";
+@import "/utils/mixins";
+
+//Auth
+.auth {
+	display: block;
+	padding: 1%;
+	margin: auto;
+
+	p {
+		text-align: center;
+	}
+}
+
+.login {
+	width: 50%;
+}
+
+.register {
+	width: 75%;
+}
+
+.login-btn {
+	display: block;
+	width: 50%;
+	margin: auto;
+}
+
+//Profile
+.profile {
+	text-align: center !important;
+	padding: $spacer;
+
+	.profile-header {
+		@include profile-pic(5 rm, 7px);
+
+		width: fit-content;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 1rem;
+	}
+}
+
+.body-profile {
+	margin: auto;
+	align-content: center;
+	display: inline-block;
+
+	button {
+		margin-left: $spacer;
+		margin-right: $spacer;
+	}
+}
+
