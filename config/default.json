@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://admin:ZPsGysBFN3DsLhik@mypantrydb-n6gmv.mongodb.net/moc?retryWrites=true&w=majority",
+  "jwtSecret": "mp_secret"
+}
